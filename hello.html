@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="content">
+    <h1>{{meg}}</h1>
+    <p v-html="mes"></p>
+
+    <button :title="mytitle">提交</button>
+
+    <button @click= "show">弹窗</button>
+    
+    <button @click = "run">跑起来</button>
+
+    <button @click = "stop">别跑了</button>
+
+    <h3>{{words}}</h3>
+</div>
+</body>
+<script>
+   var vm = new Vue({
+       el:"#content",
+       data:{
+           meg:"hello world!!",
+           mes:"<h2>hello world</h2>",
+           mytitle:"这是提交按钮",
+           words:"这是一个跑马灯效果，跑呀马呀灯~~",
+           timeID:null
+       },
+       methods:{
+           show:function () {
+              alert('弹窗效果成功')
+           },
+           run(){
+              this.timeID = setInterval(() => {
+                   var start = this.words.substring(0,1)
+                   var end = this.words.substring(1)
+                   this.words = end + start;
+               },300)
+           },
+           stop(){
+               clearInterval(this.timeID)
+           }
+       }
+   })
+</script>
+</html>

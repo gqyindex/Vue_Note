@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算器案例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="box">
+
+<input type="text" id="box1" :value="meg1" v-model="meg1">
+
+<select v-model="sign">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+
+<input type="text" id="box2" :value = "meg2" v-model="meg2">
+
+<button  @click = "show">=</button>
+
+<input type="text" id="res" :value = "result" v-model="result">
+
+</div>
+<!--使用v-model实现数据的双向绑定-->
+<!--<div id="box">
+
+<h1>{{meg}}</h1>
+
+    <input type="text" :value="meg" v-model="meg">
+
+</div>-->
+</body>
+<script>
+    var vm = new Vue({
+        el:"#box",
+        data:{
+            meg1:0,
+            meg2:0,
+            result:0,
+            sign:'+'
+        },
+        methods:{
+            show(){
+                switch (this.sign) {
+                    case '+':{
+                        this.result = parseInt(this.meg1) + parseInt(this.meg2);
+                        break;
+                    }
+                    case '-':{
+                        this.result = parseInt(this.meg1) - parseInt(this.meg2);
+                        break;
+                    }
+                    case '*':{
+                        this.result = parseInt(this.meg1) * parseInt(this.meg2);
+                        break;
+                    }
+                    case '/':{
+                        this.result = parseInt(this.meg1) / parseInt(this.meg2);
+                        break;
+                    }
+                }
+            }
+        }
+    })
+
+</script>
+</html>

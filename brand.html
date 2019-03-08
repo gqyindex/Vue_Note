@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>品牌搜索案例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div id="box1">
+
+ID:<input type="text" v-model="id" value="id" >
+
+Name:<input type="text" v-model="name" value="name">
+
+<button type="submit" class="btn btn-primary" @click="result">提交</button>
+    搜索关键字：<input type="text" v-model="keywords" value="keywords">
+
+<table class="table" style="margin-top: 50px">
+    <thead>
+    <tr>
+    <th>ID</th>
+    <th>名称</th>
+    <th>创建时间<td>
+    <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr v-for="item in search(keywords)">
+        <th>{{item.id}}</th>
+        <th>{{item.name}}</th>
+        <th>{{item.ctime | dateFormat()}}</th>
+        <th><a href=""  @click.prevent="del(item.id)">删除</a></th>
+    </tr>
+    </tbody>
+</table>
+
+</div>
+</body>
+
+<script>
+
+
+    Vue.filter('dateFormat', function(dateStr, pattern='yyyy-mm-dd'){
+        var dt = new Date(dateStr)
+// yyyy-mm-dddd
+        var y = dt.getFullYear()
+        var m = dt.getMonth() + 1
+        var d = dt.getDate()
+        if(pattern && pattern.toLowerCase() == 'yyyy-mm-dd')
+        {
+            return `${y} - ${m} - ${d}`
+        }
+        else{
+            var hh = dt.getHours()
+            var mm = dt.getMinutes()
+            var ss = dt.getSeconds()
+            return `${y} ${m} ${d} ${hh}:${mm}:${ss}`
+        }
+    })
+
+     var vm = new Vue({
+         el:"#box1",
+         data:{
+             id:'',
+             name:'',
+             keywords:'',
+               list:[{
+                   id:1,
+                   name:"Tom",
+                   ctime:Date.now(),
+               },
+                   {
+                       id:2,
+                       name:"Alice",
+                       ctime:Date.now(),
+                   },
+                   {
+                       id:3,
+                       name:"Alice",
+                       ctime:Date.now(),
+                   }]
+         },
+         methods:{
+             result(){
+               var more = {
+                   id:this.id,
+                   name:this.name,
+                   ctime:Date.now()
+               }
+                this.list.push(more)
+                 this.id='',
+                     this.name=''
+             },
+             del(id){
+                 this.list.some((item,i) => {
+                     if (item.id === id){
+                         this.list.splice(i,1)
+                         return true;
+                     }
+                 })
+             },
+             search(keywords){
+                 var newList = this.list.filter(item => {
+                     if (item.name.includes(keywords)) {
+                         return item
+                     }
+                 })
+                 return newList
+             },
+         }
+
+     })
+
+</script>
+
+</html>
