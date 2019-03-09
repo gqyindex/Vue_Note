@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器得使用</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="box">
+        <h1>{{c_time | dateFormat}}</h1>
+</div>
+
+<div id="box1">
+    <h2>{{n_time | dateFormat1}}</h2>
+</div>
+</body>
+<script>
+     Vue.filter('dateFormat',function (c_time) {
+         var date = new Date()
+         var y = date.getFullYear()
+         var m = (date.getMonth() + 1).toString().padStart(2,0)
+         var d = date.getDay().toString().padStart(2,0)
+         var h = date.getHours().toString().padStart(2,0)
+         var f = date.getMinutes().toString().padStart(2,0)
+         var s = date.getSeconds().toString().padStart(2,0)
+         return `${y}-${m}-${d} ${h}:${f}:${s}`
+     })
+
+
+    var vm = new Vue({
+        el:'#box',
+        data:{
+            c_time:Date.now(),
+        }
+    })
+
+    var vm1 = new Vue({
+        el:"#box1",
+        data: {
+            n_time:Date.now()
+        },
+        filters:{
+            dateFormat1:function (n_time) {
+                var date = new Date()
+                var y = date.getFullYear()
+                var m = (date.getMonth() + 1).toString().padStart(2,0)
+                var d = date.getDay()
+                var h = date.getHours().toString().padStart(2,0)
+                var f = date.getMinutes().toString().padStart(2,0)
+                var s = date.getSeconds().toString().padStart(2,0)
+                return `${y}-${m}-${d} ${h}:${f}:${s}`
+            }
+        }
+    })
+</script>
+
+</html>

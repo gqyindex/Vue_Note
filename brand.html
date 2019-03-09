@@ -12,10 +12,15 @@
 
 ID:<input type="text" v-model="id" value="id" >
 
-Name:<input type="text" v-model="name" value="name">
+    <!--当enter键keyup得时候触发result事件-->
+    <!--当113键值对应得F2键keyup得时候触发result事件-->
+    <!--A不属于Vue已定义得特定值，所以手动配置-->
+Name:<input type="text" v-model="name" value="name" @keyup.enter="result" @keyup.113="result" @keyup.A="result">
 
 <button type="submit" class="btn btn-primary" @click="result">提交</button>
-    搜索关键字：<input type="text" v-model="keywords" value="keywords">
+
+    <!--定义得一个Vue中得focus方法-->
+    搜索关键字：<input type="text" v-model="keywords" value="keywords" v-focus>
 
 <table class="table" style="margin-top: 50px">
     <thead>
@@ -42,6 +47,14 @@ Name:<input type="text" v-model="name" value="name">
 
 <script>
 
+    /*手动配置A的键值返回结果*/
+    Vue.config.keyCodes.A = '65';
+
+    Vue.directive('focus',{
+        inserted:function (el) {
+            el.focus()
+        }
+    })
 
     Vue.filter('dateFormat', function(dateStr, pattern='yyyy-mm-dd'){
         var dt = new Date(dateStr)

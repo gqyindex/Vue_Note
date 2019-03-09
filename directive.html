@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="box">
+<h1 v-color="'red'">{{meg}}</h1>
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el:"#box",
+        data:{
+            meg:'hello world!!!'
+        },
+        directives:{
+            'color':function (el,binding) {
+                el.style.color = binding.value
+            }
+        }
+    })
+</script>
+</html>

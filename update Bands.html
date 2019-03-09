@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div id="content">
+    <input type="text" v-model="keyword" value="keyword">
+    <input type="button"  value="添加" @click="add">
+
+    <table class="table" style="margin-top: 50px">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr v-for="item in list">
+            <th>{{item.id}}</th>
+            <th>{{item.ctime}}</th>
+            <th>
+                <a href="" @click="del(item.id)">删除</a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el:"#content",
+        data:{
+            keyword:'',
+            list:[
+
+            ]
+        },
+        created(){
+            this.getList()
+        },
+        methods:{
+              add(){
+                  this.$http.post('http://kerys.pythonanywhere.com/api/addprod',{keyword: this.keyword},{emulateJson:true}).then(result =>{
+                      var result = result.body
+                      if (result.status === 'success'){
+                        this.getList()
+                      }else{
+                          alert('添加数据失败')
+                      }
+                      }
+                  )
+              },
+              getList(){
+              this.$http.get('http://kerys.pythonanywhere.com/api/getprodlist').then(result =>{
+                  var result = result.body
+                  if (result.status === 'success'){
+                      this.list = result.message
+                  } else {
+                      alert('获取数据失败')
+                  }
+              })
+            },
+              del(id){
+                  this.$http.get('http://kerys.pythonanywhere.com/api/delprod/'+id).then(result =>{
+                      var result = result.body
+                      if (result.status === 'success'){
+                          this.getList()
+                      }else{
+                          alert('删除数据失败')
+                      }
+                  })
+              }
+        }
+    })
+</script>
+</html>
