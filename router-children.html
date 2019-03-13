@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由嵌套</title>
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    <script src="lib/Vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <router-link to="/account">Account</router-link>
+    <router-view></router-view>
+
+</div>
+
+<template id="tmp1">
+    <div>
+    <h1>这是account的子元素了！！！</h1>
+    <router-link to="/account/login">登录</router-link>
+    <router-link to="/account/register">注册</router-link>
+    <router-view></router-view>
+    </div>
+</template>
+
+<script>
+    var account = {
+        template:'#tmp1'
+    }
+    var login = {
+        template: '<h2>login</h2>'
+    }
+    var register = {
+        template:'<h3>register</h3>'
+    }
+    var router = new VueRouter({
+        routes:[
+            {
+                path:'/account',
+                component:account,
+                children:[
+                    {
+                        path:'login',
+                        component:login
+                    },
+                    {
+                        path:'register',
+                        component:register
+                    }
+                ]
+            },
+        ]
+    });
+    var vm = new Vue({
+        el:'#app',
+        data:{},
+        methods:{},
+        router
+    });
+</script>
+
+</body>
+</html>
+
+
+

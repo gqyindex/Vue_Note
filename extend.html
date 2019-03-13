@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>继承父组件，传递给父组件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <com1 v-bind:parentmsg="meg" @func="sendfromson"></com1>
+</div>
+
+<template id="tmp1">
+    <div>
+        <h2>我就是个儿子！！！{{parentmsg}}</h2>
+        <button @click="sendMeg">向父组件传递信息</button>
+    </div>
+</template>
+
+<script>
+    var com1= {
+        template:'#tmp1',
+        props:['parentmsg'],
+        data:function () {
+            return{
+                sonmeg:'我就是个sonmeg'
+            }
+        },
+        methods: {
+            sendMeg(){
+                this.$emit('func',this.sonmeg)
+            }
+        }
+    }
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            meg:'叫爸爸，继承我的蚂蚁花呗吧！',
+            fromson:''
+        },
+        methods:{
+          sendfromson(data){
+              this.fromson = data
+             console.log( this.fromson)
+          }
+        },
+        components:{
+            com1
+        }
+    })
+</script>
+</body>
+</html>

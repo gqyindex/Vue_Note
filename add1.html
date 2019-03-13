@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加一加一</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <counter>
+
+    </counter>
+
+    <counter>
+
+    </counter>
+</div>
+<template id='temp'>
+    <div>
+        <input type="button" value="加一" @click="increment">
+        <h3>{{count}}</h3>
+    </div>
+</template>
+
+</body>
+
+<script>
+    //计数器组件
+    var dataObj={count:0}
+    Vue.component('counter',{
+        template:'#temp',
+        data: function(){
+            return {
+                count:0
+            }
+        },
+        methods: {
+            increment(){
+                this.count++
+            }
+        }
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+        },
+    })
+</script>
+
+</html>

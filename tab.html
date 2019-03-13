@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>动画效果</title>
+    <title>切换登录注册</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
     <style>
         .v-enter,
         .v-leave-to{
@@ -17,25 +16,35 @@
 
         }
     </style>
-
 </head>
 <body>
-<div id="content">
-    <input type="button" @click="meg = !meg" value="toggle">
+<div id="app">
+
+    <input type="button" value="login" @click="name='login'">
+    <input type="button" value="register" @click="name='register'">
     <transition>
-    <h1 v-if="meg">这是一个动画</h1>
-    </transition>
+    <component :is="name"></component>
+        </transition>
 </div>
+
 </body>
+
 <script>
+    Vue.component('login',
+        {
+        template:'<h1>login</h1>'
+    });
+    Vue.component('register' ,
+        {
+        template:'<h1>register</h1>'
+    });
+
     var vm = new Vue({
-        el:"#content",
+        el:'#app',
         data:{
-            meg:false
-        },
-        methods:{
+            name:'login'
         }
     })
+
 </script>
 </html>
-

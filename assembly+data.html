@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件中的data</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <temp1></temp1>
+</div>
+
+</body>
+<script>
+    Vue.component('temp1',{
+        template:'<h1>这是一个组件全局的====>{{meg}}</h1>',
+        data:function () {
+            return {
+                meg:'这是template的data'
+            }
+        }
+    })
+
+    var vm =new Vue({
+        el:'#app'
+    })
+</script>
+</html>

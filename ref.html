@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$ref</title>
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+</head>
+<body>
+<div id="app">
+    <h2 ref='myh'>{{meg}}</h2>
+    <input type="button" @click="show" value="点击">
+
+    <!--注册组件使用-->
+    <login ref="login"></login>
+</div>
+
+
+<script>
+
+    var login = {
+        template:'<h1>这是login</h1>',
+        data: function () {
+            return{
+                a:'这是login的组件数据'
+            }
+        },
+        methods: {
+            appear(){
+                alert('这是子组件的appear方法')
+            }
+        }
+    }
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            meg:'this is h2,ha~'
+        },
+        methods:{
+            show(){
+                console.log(this.$refs.login.appear())
+            }
+        },
+        components:{
+            login
+        }
+    })
+</script>
+</body>
+</html>

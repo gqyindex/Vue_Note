@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三种定义组件的方式</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <temp1></temp1>
+</div>
+<template id="template1">
+    <h1>这是第三种定义组件的方式</h1>
+</template>
+
+</body>
+<script>
+    Vue.component('temp1',{
+        template:'#template1'
+    })
+    var vm = new Vue({
+        el:'#app'
+    })
+</script>
+</html>

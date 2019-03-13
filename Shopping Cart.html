@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>加入购物车效果</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <!-- <link href="https://daneden.github.io/animate.css/" rel="stylesheet">-->
+    <link href="animate.css" rel="stylesheet">
 </head>
 <body>
-$END$
+<div id="app">
+    <input type="button" value="添加到购物车" @click="flag = !flag">
+
+    <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter">
+    <div style="width: 30px;height: 30px;background-color: green" v-show="flag"></div>
+    </transition>
+</div>
+
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:false
+        },
+        methods:{
+            beforeEnter: function (el) {
+               el.style.transform = 'translate(0,0)'
+            },
+            // 当与 CSS 结合使用时
+            // 回调函数 done 是可选的
+            enter: function (el, done) {
+                el.offsetWidth
+                el.style.transform = 'translate(100px,500px)',
+                el.style.transition = 'all 1s ease'
+                done()
+            },
+            afterEnter: function (el) {
+               this.flag = !this.flag
+            }
+        }
+    })
+</script>
+
 </body>
 </html>
