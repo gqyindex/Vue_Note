@@ -36,15 +36,32 @@ module.exports = {
                 test: /\.less$/, // 正则匹配要识别的css
                 use: [
                     {
-                        loader: 'style-loader' // 使用style-loader进行处理，位置必须在css-loader前面
+                        loader: 'style-loader'
                     },
                     {
-                        loader: 'css-loader' // 使用css-loader进行处理
+                        loader: 'css-loader'
                     }
                 ]
-                //use:['style-loader','css-loader'] // 此处也可以这样写
+            },
+            {
+                test: /\.sass$/, // 正则匹配要识别的css
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.(jpg|png|gif|svg|jpeg|bmp)$/, // 正则匹配要识别的css
+                use: 'url-loader?name=[hash:8]-[name].[ext]'
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/, // 正则匹配要识别的css
+                use: 'url-loader'
             }
-
         ]
     }
 }
