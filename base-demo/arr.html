@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组去重</title>
+</head>
+<body>
+<script>
+    var arr = [1,2,3,2,3,4,5];
+    function Sort(arr) {
+        var result = {};
+        var newarr = [];
+        for (var i=0;i<arr.length;i++){
+            if (! result.hasOwnProperty(arr[i])){
+                newarr.push(arr[i]);
+                result[arr[i]] = 1;//给result对象的arr[i]属性赋值1(任意值),然后再判断if条件，把arr[i]当成属性，判断属性是否重复，不重复就执行
+            }
+        }
+        console.log(newarr);//1,2,3,4,5
+        console.log(result);//{1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+    }
+    Sort(arr);
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@
       </div>
     </header>
     <section class="profile-number">
+      <!--点击跳转路由到login-->
       <router-link to="/login" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
