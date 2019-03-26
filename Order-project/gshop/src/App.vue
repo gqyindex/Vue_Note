@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <router-view/>
     <FooterGuide></FooterGuide>
   </div>
 </template>

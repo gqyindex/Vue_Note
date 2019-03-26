@@ -1,0 +1,31 @@
+{
+  "status":0,
+  "meg":"ok",
+  "result":[
+    {
+      "productId":"1",
+      "productName":"小米音响",
+      "productPrice":"299",
+      "productImg":"01.png"
+    },
+    {
+      "productId":"2",
+      "productName":"自拍杆",
+      "productPrice":"69",
+      "productImg":"02.png"
+    },
+    {
+      "productId":"3",
+      "productName":"头戴式耳机",
+      "productPrice":"499",
+      "productImg":"03.png"
+    },
+    {
+      "productId":"4",
+      "productName":"VR眼镜",
+      "productPrice":"349",
+      "productImg":"04.png"
+    }
+  ]
+
+}
