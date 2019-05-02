@@ -8,7 +8,7 @@
         <div class="filter-nav">
           <span class="sortby">Sort by:</span>
           <a href="javascript:void(0)" class="default cur">Default</a>
-          <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+          <a href="javascript:void(0)" class="price" @click="sortPrice">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
           <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
         </div>
         <div class="accessory-result">
@@ -42,50 +42,19 @@
                     </a>
                   </div>
                   <div class="main">
+                    <div class="name">{{item.id}}</div>
                     <div class="name">{{item.Name}}</div>
                     <div class="price">{{item.Price}}</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                      <a href="javascript:;" class="btn btn--m" @click="addCart(item.id)">加入购物车</a>
                     </div>
                   </div>
                 </li>
-                <!-- <li>
-                   <div class="pic">
-                     <a href="#"><img  src="static/2.jpg" alt=""></a>
-                   </div>
-                   <div class="main">
-                     <div class="name">XX</div>
-                     <div class="price">1000</div>
-                     <div class="btn-area">
-                       <a href="javascript:;" class="btn btn&#45;&#45;m">加入购物车</a>
-                     </div>
-                   </div>
-                 </li>
-                 <li>
-                   <div class="pic">
-                     <a href="#"><img src="static/3.jpg" alt="" ></a>
-                   </div>
-                   <div class="main">
-                     <div class="name">XX</div>
-                     <div class="price">500</div>
-                     <div class="btn-area">
-                       <a href="javascript:;" class="btn btn&#45;&#45;m">加入购物车</a>
-                     </div>
-                   </div>
-                 </li>
-                 <li>
-                   <div class="pic">
-                     <a href="#"><img src="static/4.jpg" alt=""></a>
-                   </div>
-                   <div class="main">
-                     <div class="name">XX</div>
-                     <div class="price">2499</div>
-                     <div class="btn-area">
-                       <a href="javascript:;" class="btn btn&#45;&#45;m">加入购物车</a>
-                     </div>
-                   </div>
-                 </li>-->
               </ul>
+              <!--loading插件-->
+              <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="400">
+                loading...
+              </div>
             </div>
           </div>
         </div>
@@ -105,24 +74,73 @@
   import '../assets/css/checkout.css';
   import axios from 'axios';
 
-
     export default {
         name: "GoodList",
         components: { NavHeader, NavBread,NavFooter},
         data(){
           return {
-            goodList:[]
+            goodList:[],
+            sortFlag :true,
+            page:1,
+            pagesize:4,
+            busy:true
           }
         },
-        mounted:function () {
-          axios.get('/goods').then(res =>{
-            if (res.data.status == "0"){
-               this.goodList = res.data.result.list;
-            }else {
-              console.log('err')
-            }
-          })
+        mounted(){
+          this.getGoods();
+          this.sortPrice()
+        },
+      methods:{
+         getGoods(flag){
+           var params = {
+             sort: this.sortFlag?1:-1,
+             page: this.page,
+             pagesize :this.pagesize,
+           }
+           axios.get('/goods',{
+             params:params
+           }).then(res =>{
+             if (res.data.status == "0"){
+               if (flag) {
+                 this.goodList = this.goodList.concat(res.data.result.list);
+                 if (res.data.result.count == 0){
+                   this.busy = true
+                 } else{
+                   this.busy = false
+                 }
+               }else {
+                 this.goodList = res.data.result.list
+                 this.busy = false
+               }
+             }else {
+               console.log('err')
+             }
+           })
+         },
+        sortPrice(){
+           this.sortFlag = !this.sortFlag;
+           this.page = 1;
+           this.getGoods()
+        },
+        loadMore: function() {
+          this.busy = true;
+          setTimeout(() => {
+            this.page++;
+            this.getGoods(true);
+          }, 2000);
+        },
+        addCart(id){
+           axios.post('/goods/addcart', {
+             productId: id
+           }).then((res) =>{
+              if (res.status === 0){
+                alert('ok')
+              } else {
+                alert('add to cart error')
+              }
+           })
         }
+      }
     }
 </script>
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+</head>
+<body>
+    <!--input输入文本，
+        回车显示li的内容为input的value
+        li有删除按钮
+     -->
+<div id="app">
+    <input id="getText" v-model="data" @keyup.enter="showList">
+    <ul>
+        <li v-for="(item,index) in list">{{item}}<button @click="remove(index)">remove</button></li>
+    </ul>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            data: '',
+            list:[]
+        },
+        methods:{
+            showList(){
+                this.list.unshift(this.data);
+                this.data=''
+            },
+            remove(i){
+                this.list = this.list.filter((item,index) => index !== i)
+            }
+        }
+    })
+</script>
+</html>
