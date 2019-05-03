@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        全选：<input v-model="checkAll" type="checkbox">
+        <br>
+        单选：<input type="checkbox" v-for="item in list1" v-model="item.selected">
+
+    </div>
+
+<script>
+    var vm = new Vue({
+        el:'#app',
+        computed:{
+            checkAll:{
+                get(){
+                    return this.list1.every(item =>item.selected)
+                },
+                set(value){
+                  return this.list1.forEach(item=>item.selected = value)
+                }
+            }
+        },
+        data:{
+            list1:[
+                {
+                    selected:true
+                },
+                {
+                    selected:true
+                }
+            ]
+        },
+
+    })
+</script>
+</body>
+</html>

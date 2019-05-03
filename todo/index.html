@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .check{
+            color: #ff0000;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+   <!--1.基本布局-->
+    <section id="app">
+        <div class="container">
+            <h1>TODO</h1>
+
+            <input type="text" class="form-control" v-model="message" @keyup.enter="add">
+
+            <h3>你有 {{total}}条事情未完成</h3>
+
+            <!--列表生成-->
+            <div class="panel panel-default form-control" v-for="(item,index) in list">
+
+                   <input type="checkbox" v-model="item.selected" >
+
+                   <span type="text" @dblclick="edit(item)" v-show="flag !== item" :class="{check:item.selected}">{{item.content}}</span>
+
+                   <input type="text" v-model="item.content" v-show="flag == item" @keyup.enter="cancle" @blur="cancle">
+                   <button type="button" class="btn btn-danger pull-right btn-xs" @click="remove(item)">删除</button>
+            </div>
+        </div>
+    </section>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="index.js" type="text/javascript"></script>
+</html>
